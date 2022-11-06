@@ -9,13 +9,6 @@ public class Stage : MonoBehaviour
     [SerializeField] private Color platformColor=Color.white;
     [SerializeField] private float platformLength=1;
 
-    public void UpdateAttributes(int _spawnedBallCount,int _targetBallCount,Color _platformColor,float _platformLength)
-    {
-        spawnedBallCount = _spawnedBallCount;
-        targetBallCount = _targetBallCount;
-        platformColor = _platformColor;
-        platformLength = _platformLength;
-    }
     public void SetupStage()
     {
         //do platform color spawn balls set target ball and set length of platform
