@@ -139,11 +139,29 @@ public class LevelDesigner : Editor
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Delete Level", GUILayout.Height(30)))
         {
-
+            string prefabPath = AssetDatabase.GetAssetPath(PrefabUtility.GetCorrespondingObjectFromOriginalSource(myTarget.gameObject));
+            Debug.Log(prefabPath);
+            FileUtil.DeleteFileOrDirectory(prefabPath);
+            AssetDatabase.Refresh();
+            DestroyImmediate(myTarget.gameObject);
+            
+            
         }
         if (GUILayout.Button("Update Level", GUILayout.Height(30)))
         {
-
+            for (int i = 0; i < platformColors.Count; i++)
+            {
+                int tmpInt=0;
+                Stage curStage = myTarget.GetStage(i);
+                int.TryParse(spawnedBallCountTexts[i],out tmpInt);
+                curStage.SpawnedBallCount = tmpInt;
+                int.TryParse(targetBallCountTexts[i], out tmpInt);
+                curStage.TargetBallCount = tmpInt;
+                curStage.PlatformColor = platformColors[i];
+                float tmpFloat=0;
+                float.TryParse(platformLengthTexts[i], out tmpFloat);
+                curStage.PlatformLength = tmpFloat;
+            }
         }
         EditorGUILayout.EndHorizontal();
     }
