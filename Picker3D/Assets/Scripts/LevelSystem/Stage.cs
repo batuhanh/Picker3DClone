@@ -4,19 +4,37 @@ using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
+    [SerializeField] private int stageIndex=0;
     [SerializeField] private int spawnedBallCount=10;
     [SerializeField] private int targetBallCount=10;
     [SerializeField] private Color platformColor=Color.white;
     [SerializeField] private float platformLength=1;
 
+    [SerializeField] private BallCollecterPlatform ballCollecterPlatform;
+    [SerializeField] private RoadPlatform roadPlatform;
+
     public void SetupStage()
     {
-        //do platform color spawn balls set target ball and set length of platform
+        roadPlatform.CalcPlatformLength(platformLength);
+        ballCollecterPlatform.SetPosition(platformLength);
+        roadPlatform.SetPlatformColor(platformColor);
+        roadPlatform.SpawnBalls(spawnedBallCount);
+        ballCollecterPlatform.SetCollectedText("0 / " + targetBallCount.ToString());
+    }
+    public void SetStagePosZ(float localStartPosZ)
+    {
+        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y
+            , localStartPosZ);
     }
     public int SpawnedBallCount
     {
         get { return spawnedBallCount; }
         set { spawnedBallCount = value; }
+    }
+    public int StageIndex
+    {
+        get { return stageIndex; }
+        set { stageIndex = value; }
     }
     public int TargetBallCount
     {

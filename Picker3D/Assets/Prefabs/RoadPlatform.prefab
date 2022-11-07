@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2735118976234839436}
+  - component: {fileID: 830168063025221485}
   m_Layer: 0
   m_Name: RoadPlatform
   m_TagString: Untagged
@@ -28,9 +29,27 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6989796292635676708}
+  - {fileID: 2590850789225702486}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &830168063025221485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 712034780779388952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76359d3f829fcc5419969ee264bb0462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myRoadTransform: {fileID: 6989796292635676708}
+  platformRenderer: {fileID: 1796005000441928450}
+  ballPrefab: {fileID: 4460406452723391823, guid: 066018e59dc978a40b0e434b02aab58a,
+    type: 3}
+  ballsParent: {fileID: 2590850789225702486}
 --- !u!1 &4825268876542655917
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +329,36 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 5, z: 1}
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!1 &7790267009464769264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2590850789225702486}
+  m_Layer: 0
+  m_Name: BallParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2590850789225702486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7790267009464769264}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.08, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2735118976234839436}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7794396846027265897
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +369,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6989796292635676708}
   m_Layer: 0
-  m_Name: Cubes
+  m_Name: Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

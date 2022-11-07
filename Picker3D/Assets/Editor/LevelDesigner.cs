@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEditor;
 using UnityEditor.EditorTools;
 
@@ -21,50 +22,56 @@ public class LevelDesigner : Editor
 
     void OnSceneGUI()
     {
-        myTarget = (LevelInfoManager)target;
-        if (!isExec)
+        Scene scene = SceneManager.GetActiveScene();
+       
+        if (scene.name == "LevelEditorScene")
         {
-            stagesCount = myTarget.GetStagesCount();
-            tmpStagesCount = stagesCount;
-
-            spawnedBallCountTexts = new List<string>();
-            targetBallCountTexts = new List<string>();
-            platformLengthTexts = new List<string>();
-            platformColors = new List<Color>();
-
-            for (int i = 0; i < stagesCount; i++)
+            myTarget = (LevelInfoManager)target;
+            if (!isExec)
             {
-                Stage curStage = myTarget.GetStage(i);
+                stagesCount = myTarget.GetStagesCount();
+                tmpStagesCount = stagesCount;
 
-                spawnedBallCountTexts.Add(curStage.SpawnedBallCount.ToString());
-                targetBallCountTexts.Add(curStage.TargetBallCount.ToString());
-                platformLengthTexts.Add(curStage.PlatformLength.ToString());
-                platformColors.Add(curStage.PlatformColor);
+                spawnedBallCountTexts = new List<string>();
+                targetBallCountTexts = new List<string>();
+                platformLengthTexts = new List<string>();
+                platformColors = new List<Color>();
 
+                for (int i = 0; i < stagesCount; i++)
+                {
+                    Stage curStage = myTarget.GetStage(i);
+
+                    spawnedBallCountTexts.Add(curStage.SpawnedBallCount.ToString());
+                    targetBallCountTexts.Add(curStage.TargetBallCount.ToString());
+                    platformLengthTexts.Add(curStage.PlatformLength.ToString());
+                    platformColors.Add(curStage.PlatformColor);
+
+                }
+                isExec = true;
             }
-            isExec = true;
-        }
 
 
-        HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
-        Handles.BeginGUI();
-        {
-            GUILayout.BeginArea(new Rect(10, 10, 400, 400), new GUIStyle("window"));
+            HandleUtility.AddDefaultControl(GUIUtility.GetControlID(FocusType.Passive));
+            Handles.BeginGUI();
             {
-                GUIStyle guiStyle = new GUIStyle("BoldLabel");
-                guiStyle.fontSize = 15;
-                GUILayout.Label(myTarget.gameObject.name, guiStyle, GUILayout.Height(20));
+                GUILayout.BeginArea(new Rect(10, 10, 400, 400), new GUIStyle("window"));
+                {
+                    GUIStyle guiStyle = new GUIStyle("BoldLabel");
+                    guiStyle.fontSize = 15;
+                    GUILayout.Label(myTarget.gameObject.name, guiStyle, GUILayout.Height(20));
 
-                DisplayStageCountPanel();
+                    DisplayStageCountPanel();
 
-                DisplayStages();
+                    DisplayStages();
 
-                DisplayButtons();
+                    DisplayButtons();
 
+                }
+                GUILayout.EndArea();
             }
-            GUILayout.EndArea();
+            Handles.EndGUI();
         }
-        Handles.EndGUI();
+        
     }
     private void DisplayStageCountPanel()
     {
@@ -127,6 +134,7 @@ public class LevelDesigner : Editor
                 GUILayout.Label("Platform Length: ", GUILayout.Width(110), GUILayout.Height(15));
                 platformLengthTexts[i] = EditorGUILayout.TextArea(platformLengthTexts[i], EditorStyles.textArea, GUILayout.Width(50));
                 EditorGUILayout.EndHorizontal();
+
             }
             GUILayout.EndArea();
 
@@ -144,24 +152,28 @@ public class LevelDesigner : Editor
             FileUtil.DeleteFileOrDirectory(prefabPath);
             AssetDatabase.Refresh();
             DestroyImmediate(myTarget.gameObject);
-            
-            
+
+
         }
         if (GUILayout.Button("Update Level", GUILayout.Height(30)))
         {
             for (int i = 0; i < platformColors.Count; i++)
             {
-                int tmpInt=0;
+                int tmpInt = 0;
                 Stage curStage = myTarget.GetStage(i);
-                int.TryParse(spawnedBallCountTexts[i],out tmpInt);
+                curStage.StageIndex = i;
+                int.TryParse(spawnedBallCountTexts[i], out tmpInt);
                 curStage.SpawnedBallCount = tmpInt;
                 int.TryParse(targetBallCountTexts[i], out tmpInt);
                 curStage.TargetBallCount = tmpInt;
                 curStage.PlatformColor = platformColors[i];
-                float tmpFloat=0;
+                float tmpFloat = 0;
                 float.TryParse(platformLengthTexts[i], out tmpFloat);
                 curStage.PlatformLength = tmpFloat;
             }
+            myTarget.UpdateStagesInfo();
+            myTarget.SetupStartEndObjects();
+            PrefabUtility.ApplyPrefabInstance(myTarget.gameObject, InteractionMode.AutomatedAction);
         }
         EditorGUILayout.EndHorizontal();
     }
