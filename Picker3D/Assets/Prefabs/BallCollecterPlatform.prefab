@@ -836,6 +836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collecedStatusText: {fileID: 7171112137624651709}
+  upperCubeRenderer: {fileID: 2877214643946486614}
 --- !u!1 &4283425675968424940
 GameObject:
   m_ObjectHideFlags: 0

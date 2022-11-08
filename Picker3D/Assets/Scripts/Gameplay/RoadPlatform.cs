@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class RoadPlatform : MonoBehaviour
 {
@@ -10,7 +11,9 @@ public class RoadPlatform : MonoBehaviour
     [SerializeField] private Transform ballsParent;
     public void SetPlatformColor(Color newColor)
     {
-        platformRenderer.material.color = newColor;
+        Material newMat = platformRenderer.material;
+        newMat.color = newColor;
+        platformRenderer.material= newMat;
     }
     public void CalcPlatformLength(float platformLength)
     {
@@ -25,15 +28,29 @@ public class RoadPlatform : MonoBehaviour
         ballsParent.position = new Vector3(myRoadTransform.position.x,
             ballsParent.position.y, myRoadTransform.position.z);
         int oldBallsCount = ballsParent.childCount;
-        for (int i = 0; i < oldBallsCount; i++)
+        for (int i = 0; i < ballsParent.childCount; i++)
         {
-            DestroyImmediate(ballsParent.GetChild(0).gameObject);
+            ballsParent.GetChild(i).gameObject.SetActive(false);
         }
         for (int i = 0; i < amount; i++)
         {
-            Vector3 spawnPos = new Vector3(UnityEngine.Random.Range(-2.1f, 2.1f),
-                ballsParent.position.y, myRoadTransform.position.z + UnityEngine.Random.Range(-5f, 5f));
-            GameObject spawnedBall = Instantiate(ballPrefab, spawnPos, Quaternion.identity, ballsParent);
+            if (i < ballsParent.childCount)
+            {
+                ballsParent.GetChild(i).gameObject.SetActive(true);
+                Vector3 spawnPos = new Vector3(UnityEngine.Random.Range(-2.1f, 2.1f),
+                ballsParent.position.y, myRoadTransform.position.z + UnityEngine.Random.Range(-3f, 3f));
+                ballsParent.GetChild(i).transform.position = spawnPos;
+            }
+            else
+            {
+                Vector3 spawnPos = new Vector3(UnityEngine.Random.Range(-2.1f, 2.1f),
+                ballsParent.position.y, myRoadTransform.position.z + UnityEngine.Random.Range(-3f, 3f));
+                GameObject spawnedBall = (GameObject)PrefabUtility.InstantiatePrefab(ballPrefab);
+                spawnedBall.transform.SetParent(ballsParent);
+                spawnedBall.transform.position = spawnPos;
+            }
+
         }
+
     }
 }

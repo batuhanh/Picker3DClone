@@ -148,7 +148,6 @@ public class LevelDesigner : Editor
         if (GUILayout.Button("Delete Level", GUILayout.Height(30)))
         {
             string prefabPath = AssetDatabase.GetAssetPath(PrefabUtility.GetCorrespondingObjectFromOriginalSource(myTarget.gameObject));
-            Debug.Log(prefabPath);
             FileUtil.DeleteFileOrDirectory(prefabPath);
             AssetDatabase.Refresh();
             DestroyImmediate(myTarget.gameObject);
@@ -173,6 +172,7 @@ public class LevelDesigner : Editor
             }
             myTarget.UpdateStagesInfo();
             myTarget.SetupStartEndObjects();
+            
             PrefabUtility.ApplyPrefabInstance(myTarget.gameObject, InteractionMode.AutomatedAction);
         }
         EditorGUILayout.EndHorizontal();

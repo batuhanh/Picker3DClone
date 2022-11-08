@@ -12,11 +12,17 @@ public class Stage : MonoBehaviour
 
     [SerializeField] private BallCollecterPlatform ballCollecterPlatform;
     [SerializeField] private RoadPlatform roadPlatform;
+    private void Start()
+    {
+        ballCollecterPlatform.SetUpperCubeColor(platformColor);
+        roadPlatform.SetPlatformColor(platformColor);
+    }
 
     public void SetupStage()
     {
         roadPlatform.CalcPlatformLength(platformLength);
         ballCollecterPlatform.SetPosition(platformLength);
+        ballCollecterPlatform.SetUpperCubeColor(platformColor);
         roadPlatform.SetPlatformColor(platformColor);
         roadPlatform.SpawnBalls(spawnedBallCount);
         ballCollecterPlatform.SetCollectedText("0 / " + targetBallCount.ToString());

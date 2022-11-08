@@ -425,6 +425,7 @@ MonoBehaviour:
   stagePrefab: {fileID: 7405936833273497422, guid: 7ebe7c706e0478340a4c5e8371ceac23,
     type: 3}
   startCubeRenderer: {fileID: 7935230524475322683}
+  endCubeRenderer: {fileID: 2267389371409679044}
   endCube: {fileID: 8480496903214715887}
 --- !u!1 &4748073932855653623
 GameObject:

@@ -9,6 +9,7 @@ public class LevelInfoManager : MonoBehaviour
     [SerializeField] private List<GameObject> stages;
     [SerializeField] private GameObject stagePrefab;
     [SerializeField] private Renderer startCubeRenderer;
+    [SerializeField] private Renderer endCubeRenderer;
     [SerializeField] private GameObject endCube;
     private int stageCount = 0;
 
@@ -24,13 +25,21 @@ public class LevelInfoManager : MonoBehaviour
         {
             if (newStageCount < stageCount)
             {
+                //unpack prefab and delete prefab from folder
+                string prefabPath = AssetDatabase.GetAssetPath(PrefabUtility.GetCorrespondingObjectFromOriginalSource(gameObject));
+                PrefabUtility.UnpackPrefabInstance(gameObject, PrefabUnpackMode.OutermostRoot, InteractionMode.AutomatedAction);
+                FileUtil.DeleteFileOrDirectory(prefabPath);
+
                 for (int i = 0; i < stageCount - newStageCount; i++)
                 {
                     GameObject stageWillRemove = stages[stages.Count - 1];
-                   
                     stages.Remove(stageWillRemove);
                     DestroyImmediate(stageWillRemove);
                 }
+                //create new prefab with same level name to prefab folders
+                string levelsPath = "Assets/Prefabs/Levels/SavedLevels/" + gameObject.name + ".prefab";
+                PrefabUtility.SaveAsPrefabAssetAndConnect(gameObject, levelsPath, InteractionMode.AutomatedAction);
+                AssetDatabase.Refresh();
             }
             else if (newStageCount > stageCount)
             {
@@ -48,7 +57,8 @@ public class LevelInfoManager : MonoBehaviour
     }
     public void SetupStartEndObjects()
     {
-        startCubeRenderer.sharedMaterial.color = stages[0].gameObject.GetComponent<Stage>().PlatformColor;
+        startCubeRenderer.material.color = stages[0].gameObject.GetComponent<Stage>().PlatformColor;
+        endCubeRenderer.material.color = stages[stages.Count-1].gameObject.GetComponent<Stage>().PlatformColor;
         float endCubeZPos = 2.5f;
         foreach (var stage in stages)
         {
