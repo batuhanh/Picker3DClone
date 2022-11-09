@@ -26,4 +26,14 @@ public class GameManager : MonoBehaviour
         gameFailedEvent?.Invoke();
         gameFinishedEvent?.Invoke();
     }
+    private void OnEnable()
+    {
+        BallCollecterPlatform.collecterFailedEvent += GameFailed;
+        PickerPhysicsCallbacks.hittedLevelEndEvent += GameSuccessed;
+    }
+    private void OnDisable()
+    {
+        BallCollecterPlatform.collecterFailedEvent -= GameFailed;
+        PickerPhysicsCallbacks.hittedLevelEndEvent -= GameSuccessed;
+    }
 }

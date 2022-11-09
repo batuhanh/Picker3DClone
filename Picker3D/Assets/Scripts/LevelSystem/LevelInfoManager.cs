@@ -12,8 +12,6 @@ public class LevelInfoManager : MonoBehaviour
     [SerializeField] private Renderer endCubeRenderer;
     [SerializeField] private GameObject endCube;
     private int stageCount = 0;
-
-
     public int GetStagesCount()
     {
         stageCount = stagesParent.childCount;
@@ -45,8 +43,10 @@ public class LevelInfoManager : MonoBehaviour
             {
                 for (int i = 0; i < newStageCount - stageCount; i++)
                 {
-                    GameObject newStage = Instantiate(stagePrefab, stagesParent.transform.position,
-                        Quaternion.identity, stagesParent);
+                    GameObject newStage = (GameObject)PrefabUtility.InstantiatePrefab(stagePrefab);
+                    newStage.transform.SetParent(stagesParent);
+                    newStage.transform.position = stagesParent.transform.position;
+
                     stages.Add(newStage);
                 }
             }
@@ -55,10 +55,14 @@ public class LevelInfoManager : MonoBehaviour
         }
 
     }
-    public void SetupStartEndObjects()
+    private void SetColorsOfStartEnd()
     {
         startCubeRenderer.material.color = stages[0].gameObject.GetComponent<Stage>().PlatformColor;
-        endCubeRenderer.material.color = stages[stages.Count-1].gameObject.GetComponent<Stage>().PlatformColor;
+        endCubeRenderer.material.color = stages[stages.Count - 1].gameObject.GetComponent<Stage>().PlatformColor;
+    }
+    public void SetupStartEndObjects()
+    {
+        SetColorsOfStartEnd();
         float endCubeZPos = 2.5f;
         foreach (var stage in stages)
         {
@@ -94,8 +98,25 @@ public class LevelInfoManager : MonoBehaviour
             }
         }
     }
+    public float GetLevelLength()
+    {
+        float levelLength = 0f;
+        foreach (var s in stages)
+        {
+            levelLength += (s.GetComponent<Stage>().PlatformLength * 5f) + 5f;
+        }
+        return levelLength;
+    }
     public Stage GetStage(int index)
     {
         return stages[index].gameObject.GetComponent<Stage>();
+    }
+    private void OnEnable()
+    {
+        LevelManager.levelLoadedEvent += SetColorsOfStartEnd;
+    }
+    private void OnDisable()
+    {
+        LevelManager.levelLoadedEvent -= SetColorsOfStartEnd;
     }
 }

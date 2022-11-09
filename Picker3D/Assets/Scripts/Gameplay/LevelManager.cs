@@ -18,13 +18,14 @@ public class LevelManager : MonoBehaviour
     private void LoadCurrentLevel()
     {
         currentLevelIndex = PlayerPrefs.GetInt("Level", 0);
-        nextLevelIndex = PlayerPrefs.GetInt("NextLevel", 0);
+        nextLevelIndex = PlayerPrefs.GetInt("NextLevelIndex", 0);
 
-        if (currentLevelIndex < levelPrefabs.Length) //get both from levels
+        if (currentLevelIndex < levelPrefabs.Length - 1) //get both from levels
         {
             nextLevelIndex = currentLevelIndex + 1;
+            PlayerPrefs.SetInt("NextLevelIndex", nextLevelIndex);
         }
-        else if (currentLevelIndex == levelPrefabs.Length) //get next level random 
+        else if (currentLevelIndex == levelPrefabs.Length - 1) //get next level random 
         {
             if (nextLevelIndex != -1)//-1 means we can pick random and assign it
             {
@@ -33,26 +34,43 @@ public class LevelManager : MonoBehaviour
                 {
                     nextLevelIndex = UnityEngine.Random.Range(0, levelPrefabs.Length);
                 }
-                PlayerPrefs.SetInt("NextLevel", nextLevelIndex);
+                PlayerPrefs.SetInt("NextLevelIndex", nextLevelIndex);
             }
         }
-        else // get both random
+        else // get current from last random and next from random
         {
             if (nextLevelIndex != -1)
             {
+                int lastLevelIndex = PlayerPrefs.GetInt("NextLevelIndex", 0);
+                currentLevelIndex = lastLevelIndex;
 
+                nextLevelIndex = currentLevelIndex;
+                while (currentLevelIndex == nextLevelIndex)
+                {
+                    nextLevelIndex = UnityEngine.Random.Range(0, levelPrefabs.Length);
+                }
+                PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex);
+                PlayerPrefs.SetInt("NextLevelIndex", nextLevelIndex);
             }
         }
 
-        
+
         GameObject currentLevel = Instantiate(levelPrefabs[currentLevelIndex], transform.position,
+            Quaternion.identity, transform);
+
+        Vector3 nextLevelSpawnPos = new Vector3(transform.position.x, transform.position.y,
+            transform.position.z + GetCurrentLevelLength(currentLevel));
+        GameObject nextLevel = Instantiate(levelPrefabs[nextLevelIndex], nextLevelSpawnPos,
             Quaternion.identity, transform);
 
         levelLoadedEvent?.Invoke();
     }
-    private float GetCurrentLevelLength()
+    private float GetCurrentLevelLength(GameObject curLevelObj)
     {
-        return 0f;
+        float curLevelLength = 0f;
+        LevelInfoManager levelInfoManager = curLevelObj.gameObject.GetComponent<LevelInfoManager>();
+        curLevelLength = levelInfoManager.GetLevelLength() + 20;
+        return curLevelLength;
     }
     public void ReloadLevel()
     {
@@ -60,7 +78,7 @@ public class LevelManager : MonoBehaviour
     }
     private void ResetNextLevelIndex()
     {
-        PlayerPrefs.SetInt("NextLevel", -1);
+        PlayerPrefs.SetInt("NextLevelIndex", -1);
     }
     private void OnEnable()
     {

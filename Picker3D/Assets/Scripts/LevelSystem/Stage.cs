@@ -16,6 +16,7 @@ public class Stage : MonoBehaviour
     {
         ballCollecterPlatform.SetUpperCubeColor(platformColor);
         roadPlatform.SetPlatformColor(platformColor);
+        ballCollecterPlatform.SetCollectLimit(targetBallCount);
     }
 
     public void SetupStage()
@@ -26,6 +27,7 @@ public class Stage : MonoBehaviour
         roadPlatform.SetPlatformColor(platformColor);
         roadPlatform.SpawnBalls(spawnedBallCount);
         ballCollecterPlatform.SetCollectedText("0 / " + targetBallCount.ToString());
+        
     }
     public void SetStagePosZ(float localStartPosZ)
     {

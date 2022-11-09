@@ -15,7 +15,7 @@ public class CameraMovement : MonoBehaviour
     {
         if (canFollow)
         {
-            targetZPos = Mathf.Lerp(targetZPos, targetTransform.position.z + zOffset, Time.deltaTime * followSpeed);
+           targetZPos = Mathf.Lerp(targetZPos, targetTransform.position.z + zOffset, Time.deltaTime * followSpeed);
             transform.position = new Vector3(transform.position.x, transform.position.y,
                 targetZPos);
         }

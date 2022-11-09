@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class PickerMovement : MonoBehaviour
 {
+    [SerializeField] private Rigidbody myRb;
     [SerializeField] private float horiztontalSpeed = 10f;
     [SerializeField] private float verticalSpeed = 10f;
-    private bool canMove = false; 
-    private bool canRun = false; 
+    private bool canMove = false;
+    private bool canRun = false;
     private float horizontal;
     private Vector3 mousePosition;
-
+    
     private void Update()
     {
         if (canMove)
@@ -29,18 +30,23 @@ public class PickerMovement : MonoBehaviour
             else
             {
                 horizontal = 0;
-            }
-
+            }   
+        }
+    }
+    private void FixedUpdate()
+    {
+        if (canMove)
+        {
             //Vertical Calc
-            float verticalActualSpeed = (verticalSpeed * Time.deltaTime);
+            float verticalActualSpeed = (verticalSpeed * Time.fixedDeltaTime);
             if (!canRun)
             {
                 verticalActualSpeed = 0f;
             }
 
             //applying speeds to transform
-            transform.position = new Vector3(Mathf.Clamp(transform.position.x + (horizontal * horiztontalSpeed * Time.deltaTime), -3f, 3f),
-                transform.position.y, transform.position.z + verticalActualSpeed);
+            myRb.MovePosition(new Vector3(Mathf.Clamp(transform.position.x + (horizontal * horiztontalSpeed * Time.fixedDeltaTime), -1.5f, 1.5f),
+                 transform.position.y, transform.position.z + verticalActualSpeed));
         }
     }
     private void EnableMovement()
@@ -57,14 +63,22 @@ public class PickerMovement : MonoBehaviour
     {
         canRun = false;
     }
+    private void EnableVerticalMovement()
+    {
+        canRun = true;
+    }
     private void OnEnable()
     {
         GameManager.gameStartedEvent += EnableMovement;
         GameManager.gameFinishedEvent += DisableMovement;
+        PickerPhysicsCallbacks.hittedBallCollecterEvent += DisableVerticalMovement;
+        BallCollecterPlatform.collecterSuccessEvent += EnableVerticalMovement;
     }
     private void OnDisable()
     {
         GameManager.gameStartedEvent -= EnableMovement;
         GameManager.gameFinishedEvent -= DisableMovement;
+        PickerPhysicsCallbacks.hittedBallCollecterEvent -= DisableVerticalMovement;
+        BallCollecterPlatform.collecterSuccessEvent -= EnableVerticalMovement;
     }
 }

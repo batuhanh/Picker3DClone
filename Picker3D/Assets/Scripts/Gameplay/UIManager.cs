@@ -20,14 +20,28 @@ public class UIManager : MonoBehaviour
         gameMenu.SetActive(false);
         gameEndMenu.SetActive(true);
     }
+    private void OpenFailUI()
+    {
+        gameEndMenu.SetActive(true);
+        failMenu.SetActive(true);
+    }
+    private void OpenWinUI()
+    {
+        gameEndMenu.SetActive(true);
+        winMenu.SetActive(true);
+    }
     private void OnEnable()
     {
         GameManager.gameStartedEvent += OpenGameUI;
         GameManager.gameFinishedEvent += CloseGameUI;
+        GameManager.gameFailedEvent += OpenFailUI;
+        GameManager.gameSuccessedEvent += OpenWinUI;
     }
     private void OnDisable()
     {
         GameManager.gameStartedEvent -= OpenGameUI;
         GameManager.gameFinishedEvent -= CloseGameUI;
+        GameManager.gameFailedEvent -= OpenFailUI;
+        GameManager.gameSuccessedEvent -= OpenWinUI;
     }
 }
