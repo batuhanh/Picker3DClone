@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
+using DG.Tweening;
 
 public class PickerMovement : MonoBehaviour
 {
@@ -11,7 +13,8 @@ public class PickerMovement : MonoBehaviour
     private bool canRun = false;
     private float horizontal;
     private Vector3 mousePosition;
-    
+
+    public static event Action movedToNextStartEvent;
     private void Update()
     {
         if (canMove)
@@ -67,11 +70,22 @@ public class PickerMovement : MonoBehaviour
     {
         canRun = true;
     }
+    private void MoveToNextLevelStartPos()
+    {
+        DisableMovement();
+        float curLevellength = LevelManager.Instance.GetCurrentLevelLength(LevelManager.Instance.GetCurrentLevel());
+        Vector3 targetPos = new Vector3(0, transform.position.y, curLevellength-10f);
+        transform.DOMove(targetPos, 2f).OnComplete(() =>
+        {
+            movedToNextStartEvent?.Invoke();
+        });
+    }
     private void OnEnable()
     {
         GameManager.gameStartedEvent += EnableMovement;
         GameManager.gameFinishedEvent += DisableMovement;
         PickerPhysicsCallbacks.hittedBallCollecterEvent += DisableVerticalMovement;
+        PickerPhysicsCallbacks.hittedLevelEndEvent += MoveToNextLevelStartPos;
         BallCollecterPlatform.collecterSuccessEvent += EnableVerticalMovement;
     }
     private void OnDisable()
@@ -79,6 +93,7 @@ public class PickerMovement : MonoBehaviour
         GameManager.gameStartedEvent -= EnableMovement;
         GameManager.gameFinishedEvent -= DisableMovement;
         PickerPhysicsCallbacks.hittedBallCollecterEvent -= DisableVerticalMovement;
+        PickerPhysicsCallbacks.hittedLevelEndEvent -= MoveToNextLevelStartPos;
         BallCollecterPlatform.collecterSuccessEvent -= EnableVerticalMovement;
     }
 }

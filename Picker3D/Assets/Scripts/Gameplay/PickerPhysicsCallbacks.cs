@@ -11,6 +11,7 @@ public class PickerPhysicsCallbacks : MonoBehaviour
     {
         if (other.gameObject.CompareTag("BallCollecter"))
         {
+            other.gameObject.tag = "Untagged";
             BallCollecterPlatform ballCollecterPlatform = other.gameObject.GetComponentInParent<BallCollecterPlatform>();
             ballCollecterPlatform.CheckCollecterStatus();
             other.gameObject.SetActive(false);
@@ -18,6 +19,7 @@ public class PickerPhysicsCallbacks : MonoBehaviour
         }
         if (other.gameObject.CompareTag("LevelEnd"))
         {
+            other.gameObject.tag = "Untagged";
             hittedLevelEndEvent?.Invoke();
         }
     }

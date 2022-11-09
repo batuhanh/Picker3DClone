@@ -29,11 +29,11 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         BallCollecterPlatform.collecterFailedEvent += GameFailed;
-        PickerPhysicsCallbacks.hittedLevelEndEvent += GameSuccessed;
+        PickerMovement.movedToNextStartEvent += GameSuccessed;
     }
     private void OnDisable()
     {
         BallCollecterPlatform.collecterFailedEvent -= GameFailed;
-        PickerPhysicsCallbacks.hittedLevelEndEvent -= GameSuccessed;
+        PickerMovement.movedToNextStartEvent -= GameSuccessed;
     }
 }
