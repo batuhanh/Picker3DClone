@@ -15,3 +15,7 @@ I developed a Level editor tool for the game designer or level designer to work 
 - Determining targetBallCount and spawnedBallCount for each stage
 - Determining the length of each stage
 - Determining the platform color of each stag
+
+**Usage of Level Editor Tool:**
+
+### Gameplay video
