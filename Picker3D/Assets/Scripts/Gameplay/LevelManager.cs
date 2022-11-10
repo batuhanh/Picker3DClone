@@ -54,7 +54,7 @@ public class LevelManager : MonoBehaviour
         {
             if (isLevelsSelected == 0)
             {
-                
+
                 int lastLevelIndex = PlayerPrefs.GetInt("NextLevelIndex", 0);
                 currentLevelIndex = lastLevelIndex;
 
@@ -63,7 +63,7 @@ public class LevelManager : MonoBehaviour
                 {
                     nextLevelIndex = UnityEngine.Random.Range(0, levelPrefabs.Length);
                 }
-                
+
                 PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex);
                 PlayerPrefs.SetInt("NextLevelIndex", nextLevelIndex);
 
@@ -71,9 +71,9 @@ public class LevelManager : MonoBehaviour
             }
             else
             {
-                
-                currentLevelIndex=PlayerPrefs.GetInt("CurrentLevelIndex", 0);
-                nextLevelIndex=PlayerPrefs.GetInt("NextLevelIndex", 0);
+
+                currentLevelIndex = PlayerPrefs.GetInt("CurrentLevelIndex", 0);
+                nextLevelIndex = PlayerPrefs.GetInt("NextLevelIndex", 0);
             }
         }
 
@@ -110,8 +110,7 @@ public class LevelManager : MonoBehaviour
     }
     private void IncreaseLevel()
     {
-        currentLevelIndex++;
-        PlayerPrefs.SetInt("Level", currentLevelIndex);
+        PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level", 0) + 1);
     }
     private void OnEnable()
     {

@@ -11,6 +11,8 @@ public class LevelInfoManager : MonoBehaviour
     [SerializeField] private Renderer startCubeRenderer;
     [SerializeField] private Renderer endCubeRenderer;
     [SerializeField] private GameObject endCube;
+    [SerializeField] private Material platformMat;
+
     private int stageCount = 0;
     public int GetStagesCount()
     {
@@ -57,8 +59,13 @@ public class LevelInfoManager : MonoBehaviour
     }
     private void SetColorsOfStartEnd()
     {
-        startCubeRenderer.material.color = stages[0].gameObject.GetComponent<Stage>().PlatformColor;
-        endCubeRenderer.material.color = stages[stages.Count - 1].gameObject.GetComponent<Stage>().PlatformColor;
+        var startMat = new Material(platformMat);
+        startMat.color = stages[0].gameObject.GetComponent<Stage>().PlatformColor;
+        startCubeRenderer.material = startMat;
+
+        var endMat = new Material(platformMat);
+        endMat.color = stages[stages.Count - 1].gameObject.GetComponent<Stage>().PlatformColor;
+        endCubeRenderer.material = endMat;
     }
     public void SetupStartEndObjects()
     {

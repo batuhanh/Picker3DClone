@@ -9,11 +9,12 @@ public class RoadPlatform : MonoBehaviour
     [SerializeField] private Renderer platformRenderer;
     [SerializeField] private GameObject ballPrefab;
     [SerializeField] private Transform ballsParent;
+    [SerializeField] private Material platformMat;
     public void SetPlatformColor(Color newColor)
     {
-        Material newMat = platformRenderer.material;
-        newMat.color = newColor;
-        platformRenderer.material= newMat;
+        var tempMaterial = new Material(platformMat);
+        tempMaterial.color = newColor;
+        platformRenderer.sharedMaterial = tempMaterial;
     }
     public void CalcPlatformLength(float platformLength)
     {

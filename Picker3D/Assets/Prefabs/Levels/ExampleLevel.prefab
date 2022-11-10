@@ -519,6 +519,7 @@ MonoBehaviour:
   startCubeRenderer: {fileID: 7935230524475322683}
   endCubeRenderer: {fileID: 2267389371409679044}
   endCube: {fileID: 8480496903214715887}
+  platformMat: {fileID: 2100000, guid: 0f0db3f120de85347b6dc96fb46dec81, type: 2}
 --- !u!1 &4748073932855653623
 GameObject:
   m_ObjectHideFlags: 0

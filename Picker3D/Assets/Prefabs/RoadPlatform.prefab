@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myRoadTransform: {fileID: 6989796292635676708}
   platformRenderer: {fileID: 1796005000441928450}
+  platformMat: {fileID: 2100000, guid: 0f0db3f120de85347b6dc96fb46dec81, type: 2}
   ballPrefab: {fileID: 4460406452723391823, guid: 066018e59dc978a40b0e434b02aab58a,
     type: 3}
   ballsParent: {fileID: 2590850789225702486}

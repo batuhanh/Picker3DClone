@@ -35,7 +35,6 @@ public class UIManager : MonoBehaviour
     }
     private void UpdateLevelText()
     {
-        Debug.Log("Text Updated");
         levelText.text = "Level " + (PlayerPrefs.GetInt("Level",0)+1).ToString();
     }
     private void OnEnable()

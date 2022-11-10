@@ -15,7 +15,7 @@ public class BallCollecterPlatform : MonoBehaviour
     private int collectLimit = 0;
     public static event Action collecterSuccessEvent;
     public static event Action collecterFailedEvent;
-
+    [SerializeField] private Material platformMat;
     public void CollactNewBall(GameObject ballObj)
     {
         collectedBalls.Add(ballObj);
@@ -37,9 +37,10 @@ public class BallCollecterPlatform : MonoBehaviour
     }
     public void SetUpperCubeColor(Color newColor)
     {
-        Material newMat = upperCubeRenderer.material;
-        newMat.color = newColor;
-        upperCubeRenderer.material = newMat;
+        var tempMaterial = new Material(platformMat);
+        tempMaterial.color = newColor;
+        upperCubeRenderer.sharedMaterial = tempMaterial;
+
     }
     public void CheckCollecterStatus()
     {

@@ -22,6 +22,7 @@ public class Ball : MonoBehaviour
         spawnedEffectObj.GetComponent<ParticleSystem>().Play();
         SoundManager.Instance.PlayPopSound();
         Destroy(gameObject);
+        Destroy(spawnedEffectObj,3f);
     }
     private void CheckIsInside()
     {
