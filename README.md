@@ -8,10 +8,10 @@ I developed a Level editor tool for the game designer or level designer to work 
 
 **What we can do with this editor tool:**
 
--Create a level
--Delete level
--Changing the total number of complated levels (Current Level)
--Determine how many stages the levels will have
--Determining targetBallCount and spawnedBallCount for each stage
--Determining the length of each stage
--Determining the platform color of each stag
+- Create a level
+- Delete level
+- Changing the total number of complated levels (Current Level)
+- Determine how many stages the levels will have
+- Determining targetBallCount and spawnedBallCount for each stage
+- Determining the length of each stage
+- Determining the platform color of each stag
