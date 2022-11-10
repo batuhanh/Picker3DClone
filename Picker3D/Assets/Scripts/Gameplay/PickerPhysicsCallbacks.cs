@@ -22,5 +22,16 @@ public class PickerPhysicsCallbacks : MonoBehaviour
             other.gameObject.tag = "Untagged";
             hittedLevelEndEvent?.Invoke();
         }
+        if (other.gameObject.CompareTag("Ball"))
+        {
+            other.gameObject.GetComponent<Ball>().SetStatus(true);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Ball"))
+        {
+            other.gameObject.GetComponent<Ball>().SetStatus(false);
+        }
     }
 }

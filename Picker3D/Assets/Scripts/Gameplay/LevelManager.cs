@@ -22,12 +22,14 @@ public class LevelManager : MonoBehaviour
         {
             Instance = this;
         }
+        //ResetNextLevelIndex();
         LoadCurrentLevel();
     }
     private void LoadCurrentLevel()
     {
         currentLevelIndex = PlayerPrefs.GetInt("Level", 0);
         nextLevelIndex = PlayerPrefs.GetInt("NextLevelIndex", 0);
+        int isLevelsSelected = PlayerPrefs.GetInt("IsLevelsSelected", 1); //1 mean selected 0 mean not selected
 
         if (currentLevelIndex < levelPrefabs.Length - 1) //get both from levels
         {
@@ -36,7 +38,7 @@ public class LevelManager : MonoBehaviour
         }
         else if (currentLevelIndex == levelPrefabs.Length - 1) //get next level random 
         {
-            if (nextLevelIndex == -1)//-1 means we can pick random and assign it
+            if (isLevelsSelected == 0)//-1 means we can pick random and assign it
             {
                 nextLevelIndex = currentLevelIndex;
                 while (currentLevelIndex == nextLevelIndex)
@@ -44,12 +46,15 @@ public class LevelManager : MonoBehaviour
                     nextLevelIndex = UnityEngine.Random.Range(0, levelPrefabs.Length);
                 }
                 PlayerPrefs.SetInt("NextLevelIndex", nextLevelIndex);
+
+                PlayerPrefs.SetInt("IsLevelsSelected", 1);
             }
         }
         else // get current from last random and next from random
         {
-            if (nextLevelIndex == -1)
+            if (isLevelsSelected == 0)
             {
+                Debug.Log("Random Selected");
                 int lastLevelIndex = PlayerPrefs.GetInt("NextLevelIndex", 0);
                 currentLevelIndex = lastLevelIndex;
 
@@ -61,9 +66,18 @@ public class LevelManager : MonoBehaviour
                 
                 PlayerPrefs.SetInt("CurrentLevelIndex", currentLevelIndex);
                 PlayerPrefs.SetInt("NextLevelIndex", nextLevelIndex);
+
+                PlayerPrefs.SetInt("IsLevelsSelected", 1);
+            }
+            else
+            {
+                Debug.Log("Already Selected");
+                currentLevelIndex=PlayerPrefs.GetInt("CurrentLevelIndex", 0);
+                nextLevelIndex=PlayerPrefs.GetInt("NextLevelIndex", 0);
             }
         }
 
+        Debug.Log("Level: " + PlayerPrefs.GetInt("Level",0));
         Debug.Log("Current Level Index: " + currentLevelIndex + " Next Level Index: " + nextLevelIndex);
         GameObject currentLevel = Instantiate(levelPrefabs[currentLevelIndex], transform.position,
             Quaternion.identity, transform);
@@ -92,7 +106,8 @@ public class LevelManager : MonoBehaviour
     }
     private void ResetNextLevelIndex()
     {
-        PlayerPrefs.SetInt("NextLevelIndex", -1);
+        Debug.Log("ResetNextLevelIndex");
+        PlayerPrefs.SetInt("IsLevelsSelected", 0);
     }
     private void IncreaseLevel()
     {

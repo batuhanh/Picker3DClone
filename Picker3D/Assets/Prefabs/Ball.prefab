@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1272236895745638391}
   - component: {fileID: 8544949578380167273}
   - component: {fileID: 3713188825178475493}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ball
   m_TagString: Ball
   m_Icon: {fileID: 0}
@@ -126,3 +126,4 @@ MonoBehaviour:
   explosionEfectPrefab: {fileID: 3207236462258456072, guid: 210a82ffafe5a3845a41272d702f65a3,
     type: 3}
   myRenderer: {fileID: 7125039378778393442}
+  myRb: {fileID: 8544949578380167273}

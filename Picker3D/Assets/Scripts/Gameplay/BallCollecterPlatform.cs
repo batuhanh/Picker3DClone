@@ -7,6 +7,7 @@ using DG.Tweening;
 public class BallCollecterPlatform : MonoBehaviour
 {
     [SerializeField] private TMP_Text collecedStatusText;
+    [SerializeField] private GameObject ballBlocker;
     [SerializeField] private Renderer upperCubeRenderer;
     [SerializeField] private Animator myAnim;
     private List<GameObject> collectedBalls = new List<GameObject>();
@@ -46,7 +47,9 @@ public class BallCollecterPlatform : MonoBehaviour
     }
     private IEnumerator AnimDelayCaroutine()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
+        ballBlocker.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
         foreach (var b in collectedBalls)
         {
             b.gameObject.GetComponent<Ball>().Explode(upperCubeRenderer.material);
