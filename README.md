@@ -18,4 +18,14 @@ I developed a Level editor tool for the game designer or level designer to work 
 
 **Usage of Level Editor Tool:**
 
+
+https://user-images.githubusercontent.com/22244440/201230293-663e1ece-9f2b-4e75-9c34-30ce88f6df96.mp4
+
+
 ### Gameplay video
+
+
+
+https://user-images.githubusercontent.com/22244440/201230127-73880074-f57e-4e82-9152-d51cff226a6e.mp4
+
+
