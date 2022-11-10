@@ -1,6 +1,6 @@
-### Picker3DClone
+### Picker 3D Clone
 
-This project is a clone of the game Picker 3D. There were two points that I focused on while doing this project, one of them was that the Game feeling should be like in the original game. it should make the user feel the feeling of collecting the ball. The other thing I focused on was that the project code structure should have clean code and be modular. That's why I stick to Object ORiented Programming (OOP) and Event Driven Programming (EDP) while developing my project. In this way, features such as new ball shapes, obstacles or bonus objects can be added to the project very quickly.
+This project is a clone of the game Picker 3D. There were two points that I focused on while doing this project, one of them was that the Game feeling should be like in the original game. it should make the user feel the feeling of collecting the ball. The other thing I focused on was that the project code structure should have clean code and be modular. That's why I stick to OOP (Object Oriented Programming) and EDP (Event Driven Programming) while developing my project. In this way, features such as new ball shapes, obstacles or bonus objects can be added to the project very quickly.
 
 ### Level Editor Tool
 
