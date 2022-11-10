@@ -35,7 +35,9 @@ public class Ball : MonoBehaviour
     {
         Vector3 forceDirection = (transform.position + new Vector3(transform.position.x,
             transform.position.y +15f,transform.position.z+5f)).normalized;
-        myRb.AddForce(forceDirection*200);
+        myRb.velocity = Vector3.zero;
+        myRb.angularVelocity = Vector3.zero;
+        myRb.AddForce(forceDirection*300);
     }
    
     private void OnEnable()

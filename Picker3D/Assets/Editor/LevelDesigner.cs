@@ -175,6 +175,10 @@ public class LevelDesigner : Editor
             
             PrefabUtility.ApplyPrefabInstance(myTarget.gameObject, InteractionMode.AutomatedAction);
         }
+        if (GUILayout.Button("Apply To Prefab", GUILayout.Height(30)))
+        {
+            PrefabUtility.ApplyPrefabInstance(myTarget.gameObject, InteractionMode.AutomatedAction);
+        }
         EditorGUILayout.EndHorizontal();
     }
 }

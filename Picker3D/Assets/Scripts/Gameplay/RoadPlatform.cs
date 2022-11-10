@@ -26,8 +26,14 @@ public class RoadPlatform : MonoBehaviour
     }
     public void SpawnBalls(int amount)
     {
+
+        if (amount == ballsParent.childCount && ballsParent.childCount > 0 && ballsParent.GetChild(0).position != new Vector3(0, ballsParent.position.y, myRoadTransform.position.z))
+        {
+            //means balls position setted in a deafult way
+            return;
+        }
         ballsParent.position = new Vector3(myRoadTransform.position.x,
-            ballsParent.position.y, myRoadTransform.position.z);
+                ballsParent.position.y, myRoadTransform.position.z);
         int oldBallsCount = ballsParent.childCount;
         for (int i = 0; i < ballsParent.childCount; i++)
         {
@@ -38,20 +44,21 @@ public class RoadPlatform : MonoBehaviour
             if (i < ballsParent.childCount)
             {
                 ballsParent.GetChild(i).gameObject.SetActive(true);
-                Vector3 spawnPos = new Vector3(UnityEngine.Random.Range(-2.1f, 2.1f),
-                ballsParent.position.y, myRoadTransform.position.z + UnityEngine.Random.Range(-3f, 3f));
+                Vector3 spawnPos = new Vector3(0, ballsParent.position.y,
+                    myRoadTransform.position.z + i);
                 ballsParent.GetChild(i).transform.position = spawnPos;
             }
             else
             {
-                Vector3 spawnPos = new Vector3(UnityEngine.Random.Range(-2.1f, 2.1f),
-                ballsParent.position.y, myRoadTransform.position.z + UnityEngine.Random.Range(-3f, 3f));
+                Vector3 spawnPos = new Vector3(0f, ballsParent.position.y,
+                    myRoadTransform.position.z + i);
                 GameObject spawnedBall = (GameObject)PrefabUtility.InstantiatePrefab(ballPrefab);
                 spawnedBall.transform.SetParent(ballsParent);
                 spawnedBall.transform.position = spawnPos;
             }
 
         }
+
 
     }
 }
