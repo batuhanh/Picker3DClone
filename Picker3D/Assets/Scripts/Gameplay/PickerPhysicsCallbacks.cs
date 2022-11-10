@@ -24,6 +24,7 @@ public class PickerPhysicsCallbacks : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Ball"))
         {
+            SoundManager.Instance.PlayPopSound();
             other.gameObject.GetComponent<Ball>().SetStatus(true);
         }
     }

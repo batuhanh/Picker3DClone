@@ -20,6 +20,7 @@ public class Ball : MonoBehaviour
         ParticleSystemRenderer psr = spawnedEffectObj.GetComponent<ParticleSystemRenderer>();
         psr.material = platformMat;
         spawnedEffectObj.GetComponent<ParticleSystem>().Play();
+        SoundManager.Instance.PlayPopSound();
         Destroy(gameObject);
     }
     private void CheckIsInside()

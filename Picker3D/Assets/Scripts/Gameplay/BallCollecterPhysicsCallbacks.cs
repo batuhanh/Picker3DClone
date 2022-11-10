@@ -9,8 +9,10 @@ public class BallCollecterPhysicsCallbacks : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ball"))
         {
+            
             other.gameObject.tag = "Untagged";
             ballCollecterPlatform.CollactNewBall(other.gameObject);
+            SoundManager.Instance.PlayPopSound();
         }
     }
 }

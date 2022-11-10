@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -9,9 +10,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameEndMenu;
     [SerializeField] private GameObject winMenu;
     [SerializeField] private GameObject failMenu;
+    [SerializeField] private Text levelText;
 
     private void OpenGameUI()
     {
+        UpdateLevelText();
         mainMenu.SetActive(false);
         gameMenu.SetActive(true);
     }
@@ -29,6 +32,11 @@ public class UIManager : MonoBehaviour
     {
         gameEndMenu.SetActive(true);
         winMenu.SetActive(true);
+    }
+    private void UpdateLevelText()
+    {
+        Debug.Log("Text Updated");
+        levelText.text = "Level " + (PlayerPrefs.GetInt("Level",0)+1).ToString();
     }
     private void OnEnable()
     {

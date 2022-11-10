@@ -81,7 +81,7 @@ public class LevelDesigner : Editor
         stagesCountStr = tmpStagesCount.ToString();
         stagesCountStr = EditorGUILayout.TextArea(stagesCountStr, EditorStyles.textArea, GUILayout.Width(100));
         int.TryParse(stagesCountStr, out tmpStagesCount);
-        Debug.Log("Stages Count " + tmpStagesCount);
+        
         if (GUILayout.Button("Update Stage Count", GUILayout.Width(150)))
         {
             myTarget.SetStagesCount(tmpStagesCount);
